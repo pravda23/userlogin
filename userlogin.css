@@ -1,0 +1,33 @@
+:root {
+  --c1: #e6f1ff;
+  --c2: #cdd1d4;
+  --c3: #2a90f0;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0px;
+}
+
+.main {
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: var(--c1);
+  padding: 2vw;
+}
+
+.inputForms {
+  display: inherit;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 2vh;
+}
+
+.name,
+.msg {
+  margin: 3vw;
+}

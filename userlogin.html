@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <head>
+      <link rel="stylesheet" href="/userlogin.css" />
+    </head>
+
+    <div class="container">
+      <div class="main">
+        <div class="msg"></div>
+        <div class="inputForms">
+          <input class="email" type="text" placeholder="Email" />
+          <input
+            class="password"
+            type="text"
+            placeholder="Password"
+            style="display: none"
+          />
+        </div>
+        <div>
+          <button class="login">login</button>
+          <button class="register">register</button>
+          <button class="logout" style="display: none">logout</button>
+          <button class="submit" style="display: none">submit</button>
+          <button class="confirm" style="display: none">confirm</button>
+        </div>
+      </div>
+    </div>
+    <script>
+      // SELECTORS
+      const inputEmail = document.querySelector(".email");
+      const inputPassword = document.querySelector(".password");
+      const registerBtn = document.querySelector(".register");
+      const submitBtn = document.querySelector(".submit");
+      const confirmBtn = document.querySelector(".confirm");
+      const loginBtn = document.querySelector(".login");
+      const logoutBtn = document.querySelector(".logout");
+      const msg = document.querySelector(".msg");
+
+      // USERS
+      let user = [{ id: 0, email: "a", password: "a", status: "offline" }];
+
+      // FUNCTIONS
+
+      // register new user
+      function register() {
+        // check if email already exists
+
+        for (let i = 0; i < user.length; i++) {
+          if (user[i].email === inputEmail.value) {
+            msg.innerText = "Email already exists. Please log in.";
+            inputEmail.value = "";
+
+            // if user email doesn't exist, input password
+          } else if (user[i].email !== inputEmail.value) {
+            submitBtn.style.display = "inline";
+            inputPassword.style.display = "inline";
+            registerBtn.style.display = "none";
+            loginBtn.style.display = "none";
+            inputEmail.style.display = "none";
+          }
+        }
+      }
+      console.log(user);
+
+      // submit new login details
+      function submit() {
+        msg.innerText = "Check your email";
+        inputPassword.style.display = "none";
+        submitBtn.style.display = "none";
+        confirmBtn.style.display = "inline";
+      }
+
+      // confirm email login details (as if from email clickthrough)
+      function confirm() {
+        loginBtn.style.display = "inline";
+        console.log(inputEmail.value);
+
+        msg.style.display = "none";
+        submitBtn.style.display = "none";
+        inputPassword.style.display = "none";
+        registerBtn.style.display = "none";
+        inputEmail.style.display = "inline";
+        confirmBtn.style.display = "none";
+      }
+
+      // login
+      function login() {
+        if (inputEmail.value == "") {
+          msg.innerText = `Please enter a username`;
+        } else if (inputEmail.value !== user.email) {
+          user.email = inputEmail.value;
+          user.status = "online";
+
+          // display relevant message and button
+          loginBtn.style.display = "none";
+          logoutBtn.style.display = "block";
+          inputEmail.style.display = "none";
+          registerBtn.style.display = "none";
+          msg.innerText = `${user.email} is ${user.status}. Welcome.`;
+        }
+      }
+
+      // logout
+      function logout() {
+        // TRUE inputEmail == user.name
+        if (inputEmail.value === user.email) {
+          user.status = "offline";
+          msg.innerText = `You have been logged out.`;
+          user.email = "";
+          inputEmail.value = "";
+
+          // display relevant button
+          loginBtn.style.display = "inline";
+          logoutBtn.style.display = "none";
+          inputEmail.style.display = "inline";
+        }
+      }
+
+      // EVENTS
+      loginBtn.addEventListener("click", () => {
+        let loginName = inputEmail.value;
+        login();
+      });
+      logoutBtn.addEventListener("click", () => {
+        logout();
+      });
+      registerBtn.addEventListener("click", () => {
+        register();
+      });
+      submitBtn.addEventListener("click", () => {
+        submit();
+      });
+      confirmBtn.addEventListener("click", () => {
+        confirm();
+      });
+    </script>
+  </body>
+</html>
